@@ -2,14 +2,50 @@ var currentState,
     width,
     height,
     canvas,
-    renderingContext;
+    renderingContext,
+    frames = 0,
+    theHero;
 
 var states = {
-    spalsh: 0,
+    splash: 0,
     game: 1,
     score: 2
-
 };
+
+function Hero(){
+    this.x = 0;
+    this.y = 0;
+
+    this.frame = 0;
+    this.velocity = 0;
+    this.annimation = [0, 1, 2, 1];
+
+    this.rotation = 0;
+    this.radius = 12;
+
+    this.gravity = 0.25;
+    this._jump = 4.6;
+
+    this.update = function (){
+        var h = currentState === states.splash ? 10 : 5;
+        this.frame += frames % h === 0 ? 1 : 0;
+        this.frame %= this.annimation.length;
+    };
+
+    this.draw = function (renderingContext){ //rendering context is the canvas
+        renderingContext.save();
+
+        renderingContext.translate(this.x, this.y);
+        renderingContext.rotate(this.rotation);
+
+        var h = this.annimation[this.frame];
+        link[h].draw(renderingContext, 0, height - 55);
+
+        renderingContext.restore();
+    }
+}
+
+
 
 function main(){
     windowSetup();
@@ -17,20 +53,32 @@ function main(){
     currentState = states.splash;
     document.body.appendChild(canvas);
     loadGraphics();
+    theHero = new Hero;
 }
 
 function loadGraphics() {
     var img = new Image();
-    img.src = "img/linkSprite.png";
+    img.src = "img/linkSheet.png";
     img.onload = function (){
         initSprites(this);
         renderingContext.fillStyle = "#8BE4DF";
-        renderingContext.fillRect(0, 0, width, height);
-
-
-        link.draw(renderingContext, 50, 50);
+        //link.draw(renderingContext, 50, 50);
+        gameLoop();
     };
+}
 
+function gameLoop(){
+    update();
+    render();
+    window.requestAnimationFrame(gameLoop);
+}
+function update(){
+    frames++;
+    theHero.update();
+}
+function render(){
+    renderingContext.fillRect(0, 0, width, height);
+    theHero.draw(renderingContext);
 }
 
 function windowSetup() {
