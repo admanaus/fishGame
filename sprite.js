@@ -33,4 +33,3 @@ function initCloud(img){
 
     ];
 }
-//
