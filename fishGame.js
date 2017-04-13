@@ -34,18 +34,16 @@ function Hero(){
 
     this.draw = function (renderingContext){ //rendering context is the canvas
         renderingContext.save();
-
         renderingContext.translate(this.x, this.y);
         renderingContext.rotate(this.rotation);
 
         var h = this.annimation[this.frame];
+
         link[h].draw(renderingContext, 0, height - 55);
 
         renderingContext.restore();
     }
 }
-
-
 
 function main(){
     windowSetup();
@@ -68,9 +66,18 @@ function loadGraphics() {
 }
 
 function gameLoop(){
+    if (theHero.x < width){
+        theHero.x++;
+    } else {theHero.x = -45;}
+
+    if (theHero.y < 0) {
+        theHero.y += 2;
+    }
+
     update();
     render();
     window.requestAnimationFrame(gameLoop);
+
 }
 function update(){
     frames++;
@@ -90,6 +97,9 @@ function windowSetup() {
         width = 400;
         height = 430;
     }
+    document.addEventListener("click", function () {
+        theHero.y -= 80;
+    })
 }
 
 function canvasSetup(){
