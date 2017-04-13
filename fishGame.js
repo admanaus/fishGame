@@ -165,5 +165,6 @@ function canvasSetup(){
     canvas.height = height;
     renderingContext = canvas.getContext("2d");
 }
+//
 
 
