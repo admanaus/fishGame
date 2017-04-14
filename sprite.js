@@ -18,7 +18,8 @@ function initLink(img){
     link = [
         new Sprite(img, 0, 0, 45, 55),
         new Sprite(img, 45, 0, 45, 55),
-        new Sprite(img, 90, 0, 45, 55)
+        new Sprite(img, 90, 0, 45, 55),
+        new Sprite(img, 135, 0, 45, 55)
     ];
 }
 

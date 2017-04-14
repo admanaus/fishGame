@@ -6,7 +6,11 @@ var currentState,
     frames = 0,
     theHero,
     theCloud,
-    theSecondCloud;
+    cloudLength = 223,
+    points = 0,
+    cloudSelection = 0;
+
+
 
 var cloudHeight = Math.floor(Math.random() * 80 + 30);
 
@@ -23,7 +27,7 @@ function Cloud(){
 
     this.frame = 0;
     this.velocity = 0;
-    this.annimation = [0];
+    this.annimation = [cloudSelection];
 
     this.update = function (){
         var h = currentState === states.splash ? 10 : 5;
@@ -105,26 +109,41 @@ function loadGraphics() {
 }
 
 function gameLoop(){
-
+    var falling = false;
     theCloud.x--;
     // theSecondCloud.x--;
 
     if(Math.abs(theCloud.x) > width + 224 ){
         cloudHeight = Math.floor(Math.random() * 350 + 15);
+        var randomCloud = Math.floor(Math.random() * 5);
+        console.log(randomCloud);
+        theCloud.annimation = [randomCloud];
+        var cloudLengths = [220, 190, 127, 95, 48];
+        cloudLength = cloudLengths[randomCloud];
         theCloud.x = 0;
 
     }
     // if(Math.abs(theSecondCloud.x) > width + 224 ){ theSecondCloud.x = 0; }
 
-    var cloudFront = width * 0.85 - 45; //45 represents the width of the link sprite
-    var cloudBack = width * 0.85 + 224; //224 represents the length of the cloud sprite
+    var cloudFront = width * 0.86 - 45; //45 represents the width of the link sprite
+    console.log(cloudLength);
+    var cloudBack = width * 0.85 + cloudLength; //224 represents the length of the cloud sprite
     if (Math.abs(theCloud.x) > cloudFront && Math.abs(theCloud.x) < cloudBack ){
         if (theHero.y < (cloudHeight * -1) + 10){
             theHero.y += 2;
+            falling = true;
         }
 
     } else if (theHero.y < 0){
         theHero.y += 2;
+        falling = true;
+    }
+
+    if (falling === false && theHero.y < 0){
+        points = points + 1;
+        $("#points").replaceWith("<h3 id='points'> Points: " + points + "</h3>");
+        theHero.annimation = [3];
+
     }
     update();
     render();
