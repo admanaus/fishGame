@@ -30,7 +30,7 @@ function Cloud(){
     this.annimation = [cloudSelection];
 
     this.update = function (){
-        var h = currentState === states.splash ? 10 : 5;
+        var h = currentState === states.splash ? 1 : 5;
         this.frame += frames % h === 0 ? 1 : 0;
         this.frame %= this.annimation.length;
     };
@@ -61,7 +61,7 @@ function Hero(){
     this._jump = 4.6;
 
     this.update = function (){
-        var h = currentState === states.splash ? 10 : 5;
+        var h = currentState === states.splash ? 7 : 5;
         this.frame += frames % h === 0 ? 1 : 0;
         this.frame %= this.annimation.length;
     };
@@ -113,7 +113,7 @@ function gameLoop(){
     theCloud.x--;
     // theSecondCloud.x--;
 
-    if(Math.abs(theCloud.x) > width + 224 ){
+    if(Math.abs(theCloud.x) > width + cloudLength ){
         cloudHeight = Math.floor(Math.random() * 350 + 15);
         var randomCloud = Math.floor(Math.random() * 5);
         console.log(randomCloud);
