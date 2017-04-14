@@ -6,7 +6,7 @@ var currentState,
     frames = 0,
     theHero,
     theCloud,
-    cloudLength = 223,
+    cloudLength = 202,
     points = 0,
     cloudSelection = 0;
 
@@ -118,7 +118,7 @@ function gameLoop(){
         var randomCloud = Math.floor(Math.random() * 5);
         console.log(randomCloud);
         theCloud.annimation = [randomCloud];
-        var cloudLengths = [220, 190, 127, 95, 48];
+        var cloudLengths = [202, 185, 122, 91, 43];
         cloudLength = cloudLengths[randomCloud];
         theCloud.x = 0;
 
@@ -132,11 +132,13 @@ function gameLoop(){
         if (theHero.y < (cloudHeight * -1) + 10){
             theHero.y += 2;
             falling = true;
+            theHero.annimation = [0, 1, 2, 1];
         }
 
     } else if (theHero.y < 0){
         theHero.y += 2;
         falling = true;
+        theHero.annimation = [0, 1, 2, 1];
     }
 
     if (falling === false && theHero.y < 0){
